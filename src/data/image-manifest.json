@@ -1,0 +1,68 @@
+{
+  "brand/logo-badge": {
+    "width": 304,
+    "height": 304,
+    "variants": [
+      {
+        "width": 304,
+        "src": "/images/brand/logo-badge-304.webp"
+      }
+    ]
+  },
+  "flavors/amaretto-tiramisu": {
+    "width": 410,
+    "height": 380,
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/flavors/amaretto-tiramisu-320.webp"
+      },
+      {
+        "width": 410,
+        "src": "/images/flavors/amaretto-tiramisu-410.webp"
+      }
+    ]
+  },
+  "flavors/earl-grey-stracciatella": {
+    "width": 447,
+    "height": 386,
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/flavors/earl-grey-stracciatella-320.webp"
+      },
+      {
+        "width": 447,
+        "src": "/images/flavors/earl-grey-stracciatella-447.webp"
+      }
+    ]
+  },
+  "flavors/matcha-calamansi": {
+    "width": 452,
+    "height": 367,
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/flavors/matcha-calamansi-320.webp"
+      },
+      {
+        "width": 452,
+        "src": "/images/flavors/matcha-calamansi-452.webp"
+      }
+    ]
+  },
+  "flavors/roasted-coconut-sorbet": {
+    "width": 420,
+    "height": 354,
+    "variants": [
+      {
+        "width": 320,
+        "src": "/images/flavors/roasted-coconut-sorbet-320.webp"
+      },
+      {
+        "width": 420,
+        "src": "/images/flavors/roasted-coconut-sorbet-420.webp"
+      }
+    ]
+  }
+}

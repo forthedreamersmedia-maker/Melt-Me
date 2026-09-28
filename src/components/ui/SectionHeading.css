@@ -1,0 +1,59 @@
+.section-heading {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 44rem;
+}
+
+.section-heading--center {
+  margin-inline: auto;
+  justify-items: center;
+  text-align: center;
+}
+
+.section-heading__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.section-heading__eyebrow::before {
+  content: '';
+  width: 1.75em;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.section-heading--center .section-heading__eyebrow::after {
+  content: '';
+  width: 1.75em;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.section-heading__title {
+  font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.25rem);
+}
+
+.section-heading__intro {
+  max-width: 36rem;
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  color: var(--ink-soft);
+}
+
+.section-heading--light .section-heading__eyebrow,
+.section-heading--light .section-heading__intro {
+  color: rgb(255 249 243 / 0.82);
+}
+
+.section-heading--light .section-heading__title {
+  color: var(--paper);
+}

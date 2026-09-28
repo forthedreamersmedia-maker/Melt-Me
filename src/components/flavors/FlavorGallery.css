@@ -1,0 +1,628 @@
+/* ------------------------------------------------------------------ */
+/* Section                                                             */
+/* ------------------------------------------------------------------ */
+.flavors {
+  position: relative;
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+  background: var(--blush);
+  overflow: clip;
+}
+
+.flavors::before {
+  /* soft watercolor wash echoing the logo's disc */
+  content: '';
+  position: absolute;
+  inset: -20% -10% auto auto;
+  width: min(70vw, 820px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.5), transparent);
+  pointer-events: none;
+}
+
+.flavors__header {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.flavors__series {
+  padding: 0.35em 1em;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--blush);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.flavors__title {
+  font-size: clamp(2.5rem, 1.2rem + 5.4vw, 5.5rem);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0, 'opsz' 144;
+}
+
+.flavors__instruction {
+  max-width: 30rem;
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  color: var(--ink-soft);
+}
+
+.flavors__footnote {
+  position: relative;
+  max-width: 38rem;
+  margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+  font-size: 0.9375rem;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------------ */
+/* Gallery grid                                                        */
+/* ------------------------------------------------------------------ */
+.flavors__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1100px) {
+  .flavors__grid[data-count='4'] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 560px) and (max-width: 1099px) {
+  .flavors__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 559px) {
+  .flavors__grid {
+    grid-template-columns: minmax(0, 360px);
+    justify-content: center;
+    gap: 2.25rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Card                                                                */
+/* ------------------------------------------------------------------ */
+.flavor {
+  --lid-bg: color-mix(in oklab, var(--accent) 26%, var(--paper));
+  --inside-bg: color-mix(in oklab, var(--accent) 62%, var(--paper));
+  --lift-angle: 73deg;
+  --lift-ease: linear(0, 0.063, 0.208, 0.379, 0.565, 0.726, 0.867, 0.969, 1.043, 1.085, 1.105, 1.107, 1.096, 1.08, 1.06, 1.041, 1.024, 1.011, 1, 0.994, 0.99, 0.989, 0.989, 0.99, 0.992, 0.994, 0.996, 0.998, 0.999, 1);
+  --drop-ease: linear(0, 0.056, 0.172, 0.316, 0.465, 0.606, 0.73, 0.831, 0.911, 0.969, 1.009, 1.033, 1.046, 1.051, 1.049, 1.044, 1.037, 1.029, 1.022, 1.016, 1.01, 1.006, 1.003, 1, 0.999, 0.998, 0.997, 0.998, 0.999, 1);
+
+  position: relative;
+  z-index: 1;
+  perspective: 1500px;
+  perspective-origin: 50% 0%;
+}
+
+.flavor[data-revealed] {
+  z-index: 3;
+}
+
+.flavor__button {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--inside-bg);
+  text-align: left;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.flavor__button:focus-visible {
+  outline: 3px solid var(--cobalt);
+  outline-offset: 5px;
+  border-radius: var(--radius-lg);
+}
+
+/* ---- inside (revealed under the lid) ---- */
+.flavor__reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: clamp(1.1rem, 2.2vw, 1.5rem);
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 250ms ease 60ms;
+}
+
+.flavor__reveal::before {
+  /* shadow cast by the lifted lid */
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 55%;
+  background: linear-gradient(to bottom, rgb(27 20 22 / 0.28), rgb(27 20 22 / 0.08) 55%, transparent);
+  pointer-events: none;
+}
+
+.flavor__meta {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.flavor__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.flavor__status::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.flavor__status.is-out::before {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
+.flavor__name {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 1.95rem);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0, 'opsz' 72;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  transform: translateY(14px);
+  transition: transform 700ms var(--ease-out) 80ms;
+}
+
+.flavor__cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.45em;
+  margin-top: 0.25rem;
+  padding: 0.55em 1em;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 650;
+  transform: translateY(14px);
+  transition:
+    transform 700ms var(--ease-out) 140ms,
+    background-color 200ms ease;
+}
+
+.flavor__cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+/* ---- the lid ---- */
+.flavor__lid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background:
+    radial-gradient(70% 60% at 50% 42%, rgb(255 255 255 / 0.55), transparent 72%),
+    var(--lid-bg);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.35),
+    0 1px 2px rgb(27 20 22 / 0.06),
+    0 18px 36px -22px rgb(27 20 22 / 0.35);
+  transform-origin: 50% 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition:
+    transform 620ms cubic-bezier(0.3, 1.25, 0.5, 1),
+    box-shadow 620ms var(--ease-out),
+    filter 620ms var(--ease-out);
+  transition-timing-function: var(--drop-ease);
+  will-change: transform;
+}
+
+.flavor__lid::after {
+  /* catches the light as it lifts */
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0.45), transparent 60%);
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out);
+  pointer-events: none;
+}
+
+.flavor__scoop {
+  width: 76%;
+  height: auto;
+  margin-top: -4%;
+  filter: drop-shadow(0 22px 18px rgb(60 30 30 / 0.2)) drop-shadow(0 4px 4px rgb(60 30 30 / 0.12));
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: transform 700ms var(--ease-out);
+}
+
+.flavor__tab {
+  /* a small pull-tab that hints the lid can lift */
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  width: 38px;
+  height: 5px;
+  border-radius: 5px;
+  background: rgb(27 20 22 / 0.2);
+  translate: -50% 0;
+}
+
+.flavor__missing {
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* ---- revealed state ---- */
+.flavor[data-revealed] .flavor__reveal {
+  opacity: 1;
+  transition-delay: 0ms;
+}
+
+.flavor[data-revealed] .flavor__name,
+.flavor[data-revealed] .flavor__cta {
+  transform: none;
+}
+
+.flavor[data-revealed] .flavor__lid {
+  transform: rotateX(var(--lift-angle));
+  transition-duration: 1050ms;
+  transition-timing-function: cubic-bezier(0.3, 1.35, 0.45, 1);
+  transition-timing-function: var(--lift-ease);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.5),
+    0 40px 50px -30px rgb(27 20 22 / 0.45);
+}
+
+.flavor[data-revealed] .flavor__lid::after {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .flavor__button:hover .flavor__cta {
+    background: #3a2c30;
+  }
+
+  .flavor__button:hover .flavor__cta svg {
+    transform: translateX(3px);
+  }
+}
+
+/* Idle "breathing" hint before any interaction */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .flavor:not([data-revealed]) .flavor__button:hover .flavor__scoop {
+    transform: translateY(-4px) scale(1.02);
+  }
+}
+
+/* Reduced motion: no swing. The lid simply fades away. */
+@media (prefers-reduced-motion: reduce) {
+  .flavor__lid,
+  .flavor[data-revealed] .flavor__lid {
+    transform: none;
+    transition: opacity 200ms linear;
+  }
+
+  .flavor[data-revealed] .flavor__lid {
+    opacity: 0;
+  }
+
+  .flavor__name,
+  .flavor__cta {
+    transform: none;
+    transition: none;
+  }
+
+  .flavor__reveal::before {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Details dialog                                                      */
+/* ------------------------------------------------------------------ */
+.details {
+  --tint: color-mix(in oklab, var(--accent, var(--blush)) 30%, var(--paper));
+
+  width: min(100% - 2rem, 960px);
+  max-width: none;
+  max-height: min(100% - 2rem, 720px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 40px 100px -30px rgb(27 20 22 / 0.55);
+  overflow: hidden;
+}
+
+.details::backdrop {
+  background: rgb(27 20 22 / 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.details__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  max-height: inherit;
+}
+
+.details__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  transition: transform 300ms var(--ease-out);
+}
+
+.details__close:hover {
+  transform: rotate(90deg);
+}
+
+.details__close:focus-visible {
+  border-radius: 50%;
+}
+
+.details__media {
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background:
+    radial-gradient(65% 55% at 50% 45%, rgb(255 255 255 / 0.6), transparent 72%),
+    var(--tint);
+}
+
+.details__scoop {
+  width: min(100%, 380px);
+  filter: drop-shadow(0 28px 24px rgb(60 30 30 / 0.22));
+}
+
+.details__missing {
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.details__body {
+  display: grid;
+  align-content: start;
+  gap: 1.25rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  padding-right: clamp(1.75rem, 5vw, 4rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.details__body:focus-visible {
+  outline-offset: -4px;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+.details__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  justify-self: start;
+  padding: 0.3em 0.85em;
+  border-radius: var(--radius-pill);
+  background: var(--tint);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.details__status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--matcha-deep);
+}
+
+.details__status.is-out::before {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
+.details__title {
+  padding-right: 3rem;
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+}
+
+.details__description {
+  font-size: 1.125rem;
+  color: var(--ink-soft);
+}
+
+.details__facts {
+  display: grid;
+  gap: 1.1rem;
+  margin: 0.5rem 0 0;
+}
+
+.details__fact {
+  display: grid;
+  gap: 0.45rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgb(27 20 22 / 0.12);
+}
+
+.details__fact dt {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.details__fact dd {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.details__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.details__chips li {
+  padding: 0.3em 0.85em;
+  border-radius: var(--radius-pill);
+  background: var(--tint);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-weight: 550;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .details[open] {
+    animation: details-in 520ms var(--ease-out);
+  }
+
+  .details[open]::backdrop {
+    animation: backdrop-in 400ms ease;
+  }
+}
+
+@keyframes details-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Mobile: bottom sheet */
+@media (max-width: 759px) {
+  .details {
+    width: 100%;
+    max-height: 92svh;
+    margin: auto 0 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .details__panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    max-height: 92svh;
+  }
+
+  .details__media {
+    padding: 1.25rem 1.5rem 1rem;
+  }
+
+  .details__scoop {
+    width: min(46vw, 200px);
+  }
+
+  .details__body {
+    padding: 1.5rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .details__title {
+    padding-right: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .details[open] {
+      animation-name: sheet-in;
+    }
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+/* Phones: squarer cards and a flatter perspective so the lifted lid
+   stays close to the card instead of looming over the screen. */
+@media (max-width: 559px) {
+  .flavor {
+    perspective: 2600px;
+  }
+
+  .flavor__button {
+    aspect-ratio: 1 / 1.05;
+  }
+
+  .flavor__scoop {
+    width: 68%;
+  }
+}

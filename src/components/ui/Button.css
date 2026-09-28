@@ -1,0 +1,106 @@
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  --btn-border: var(--ink);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  min-height: 48px;
+  padding: 0.8em 1.45em;
+  border: 2px solid var(--btn-border);
+  border-radius: var(--radius-pill);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-weight: 650;
+  font-size: 1rem;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 220ms var(--ease-out),
+    color 220ms var(--ease-out),
+    border-color 220ms var(--ease-out),
+    transform 320ms var(--ease-out),
+    box-shadow 320ms var(--ease-out);
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding: 0.6em 1.1em;
+  font-size: 0.9375rem;
+}
+
+.btn--lg {
+  min-height: 56px;
+  padding: 0.95em 1.75em;
+  font-size: 1.0625rem;
+}
+
+.btn__icon {
+  flex: none;
+  transition: transform 320ms var(--ease-out);
+}
+
+.btn--primary:hover {
+  --btn-bg: #2e2326;
+  box-shadow: 0 10px 24px -12px rgb(27 20 22 / 0.6);
+}
+
+.btn--secondary {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-border: var(--ink);
+}
+
+.btn--secondary:hover {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+}
+
+.btn--blush {
+  --btn-bg: var(--blush);
+  --btn-fg: var(--ink);
+  --btn-border: var(--blush);
+}
+
+.btn--blush:hover {
+  --btn-bg: var(--paper);
+  --btn-border: var(--paper);
+}
+
+.btn--ghost-light {
+  --btn-bg: transparent;
+  --btn-fg: var(--blush);
+  --btn-border: rgb(243 221 231 / 0.55);
+}
+
+.btn--ghost-light:hover {
+  --btn-bg: var(--blush);
+  --btn-fg: var(--ink);
+  --btn-border: var(--blush);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--cobalt);
+  outline-offset: 3px;
+  border-radius: var(--radius-pill);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:hover .btn__icon {
+    transform: translateX(3px);
+  }
+
+  .btn:hover .btn__icon--down {
+    transform: translateY(3px);
+  }
+}

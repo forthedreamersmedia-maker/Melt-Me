@@ -1,0 +1,116 @@
+.process {
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+  background: var(--paper);
+}
+
+.process__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.process__step {
+  --step-bg: var(--blush);
+  --step-ink: var(--ink);
+
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.process__step--cream {
+  --step-bg: var(--cream-deep);
+}
+
+.process__step--matcha {
+  --step-bg: color-mix(in oklab, var(--matcha) 38%, var(--paper));
+}
+
+.process__step--caramel {
+  --step-bg: color-mix(in oklab, var(--caramel) 42%, var(--paper));
+}
+
+.process__visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  margin-bottom: 0.75rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(55% 50% at 38% 34%, rgb(255 255 255 / 0.55), transparent 72%),
+    var(--step-bg);
+  overflow: hidden;
+}
+
+.process__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.process__number {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 2rem + 6vw, 7.5rem);
+  font-weight: 500;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+  line-height: 1;
+  color: var(--step-ink);
+}
+
+.process__title {
+  font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+}
+
+.process__caption {
+  color: var(--ink-soft);
+}
+
+.process__note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 999px) {
+  .process__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2.5rem;
+  }
+
+  .process__visual {
+    width: min(100%, 240px);
+  }
+}
+
+@media (max-width: 519px) {
+  .process__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .process__step {
+    grid-template-columns: 96px 1fr;
+    column-gap: 1.25rem;
+    align-items: center;
+  }
+
+  .process__visual {
+    grid-row: span 2;
+    width: 96px;
+    margin: 0;
+    align-self: start;
+  }
+
+  .process__number {
+    font-size: 2.75rem;
+  }
+}

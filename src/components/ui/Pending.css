@@ -1,0 +1,46 @@
+.pending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.2em 0.65em;
+  border: 1px dashed currentColor;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  white-space: nowrap;
+  opacity: 0.9;
+}
+
+.pending-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--marigold);
+  box-shadow: 0 0 0 1px rgb(27 20 22 / 0.25);
+}
+
+.pending-block {
+  padding: 0.85rem 1rem;
+  border: 1.5px dashed rgb(27 20 22 / 0.28);
+  border-radius: var(--radius-sm);
+  background: rgb(255 255 255 / 0.45);
+}
+
+.pending-block__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.pending-block__text {
+  margin-top: 0.25rem;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
